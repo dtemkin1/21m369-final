@@ -74,6 +74,16 @@ export const useStore = createWithEqualityFn<AudioStoreVal>((set, get) => ({
                 break;
             }
 
+            case "fileIn": {
+                const data = { mediaElement: document.createElement("audio") };
+                const position = { x: 0, y: 0 };
+
+                createAudioNode(id, type, data);
+                set({ nodes: [...get().nodes, { id, type, data, position }] });
+
+                break;
+            }
+
             case "biquad": {
                 const data = { frequency: 440, detune: 0, Q: 1, gain: 0, type: "lowpass" };
                 const position = { x: 0, y: 0 };

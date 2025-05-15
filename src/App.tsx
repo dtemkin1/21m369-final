@@ -25,6 +25,7 @@ const selector = (store: AudioStoreVal) => ({
   addEdge: store.addEdge,
   addOsc: () => store.createNode("osc"),
   addMic: () => store.createNode("mic"),
+  addFileIn: () => store.createNode("fileIn"),
   addBiquad: () => store.createNode("biquad"),
   addConv: () => store.createNode("conv"),
   addDelay: () => store.createNode("delay"),
@@ -64,6 +65,9 @@ function App() {
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={store.addMic}>
                   Add Mic
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={store.addFileIn}>
+                  Add File In
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>

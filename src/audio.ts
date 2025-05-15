@@ -6,6 +6,7 @@ nodes.set('output', context.destination);
 
 import Osc from "./nodes/source/Osc";
 import Mic from "./nodes/source/Mic";
+import FileIn from "./nodes/source/FileIn";
 
 import Gain from "./nodes/effects/Gain";
 import Biquad from "./nodes/effects/Biquad";
@@ -21,6 +22,7 @@ export const nodeTypes = {
     // sources
     osc: Osc,
     mic: Mic,
+    fileIn: FileIn,
     // effects
     biquad: Biquad,
     conv: Conv,
@@ -31,7 +33,7 @@ export const nodeTypes = {
     out: Out,
     fileOut: FileOut,
     draw: Draw
-} as const;
+};
 
 export function isRunning() {
     return context.state === 'running';
@@ -57,6 +59,14 @@ export async function createAudioNode(id: string, type: keyof typeof nodeTypes, 
         case 'mic': {
             const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
             const node = context.createMediaStreamSource(stream);
+
+            nodes.set(id, node);
+            break;
+        }
+
+        case "fileIn": {
+            const node = context.createMediaElementSource(data.mediaElement as HTMLAudioElement);
+            data.mediaElement = node.mediaElement;
 
             nodes.set(id, node);
             break;

@@ -10,7 +10,7 @@ const selector = (store: AudioStoreVal) => ({
   isRunning: store.isRunning,
 });
 
-export default function Out({
+export default function FileOut({
   data,
   selected,
 }: {
