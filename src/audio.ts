@@ -95,14 +95,10 @@ export async function createAudioNode(id: string, type: keyof typeof nodeTypes, 
     }
 }
 
-export async function updateAudioNode(id: string, data: Record<string, unknown>, decodeAudio?: boolean) {
+export function updateAudioNode(id: string, data: Record<string, unknown>) {
     const node = nodes.get(id);
-
     // eslint-disable-next-line prefer-const
     for (let [key, val] of Object.entries(data)) {
-        if (decodeAudio) {
-            val = await context.decodeAudioData(await (val as Promise<ArrayBuffer>));
-        }
         // @ts-expect-error just trust me :(
         if (node && (node[key] instanceof AudioParam)) {
             // @ts-expect-error just trust me :(

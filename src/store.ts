@@ -22,7 +22,7 @@ export interface AudioStoreVal extends AudioStore {
     toggleAudio: () => void;
     onNodesChange: OnNodesChange<Node>;
     createNode: (type: keyof typeof nodeTypes) => void;
-    updateNode: (id: string, data: Record<string, unknown>, decodeAudio?: boolean) => void;
+    updateNode: (id: string, data: Record<string, unknown>) => void;
     onNodesDelete: OnNodesDelete<Node>;
     onEdgesChange: OnEdgesChange<Edge>;
     addEdge: OnConnect;
@@ -120,8 +120,8 @@ export const useStore = createWithEqualityFn<AudioStoreVal>((set, get) => ({
         }
     }),
 
-    updateNode: ((id: string, data: Record<string, unknown>, decodeAudio?: boolean) => {
-        updateAudioNode(id, data, decodeAudio);
+    updateNode: ((id: string, data: Record<string, unknown>) => {
+        updateAudioNode(id, data);
         set({
             nodes: get().nodes.map((node) =>
                 node.id === id

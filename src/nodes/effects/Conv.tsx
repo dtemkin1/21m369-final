@@ -12,14 +12,10 @@ import {
 } from "@/components/node-header";
 
 const selector = (id: string) => (store: AudioStoreVal) => ({
-  setBuffer: ((e) =>
-    store.updateNode(
-      id,
-      {
-        buffer: e.target.files ? e.target.files[0].arrayBuffer() : null,
-      },
-      true
-    )) as ChangeEventHandler<HTMLInputElement>,
+  setBuffer: (async (e) =>
+    store.updateNode(id, {
+      buffer: e.target.files ? await e.target.files[0].arrayBuffer() : null,
+    })) as ChangeEventHandler<HTMLInputElement>,
   setNormalize: ((e) =>
     store.updateNode(id, {
       normalize: e.target.checked,
