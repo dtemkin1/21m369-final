@@ -9,6 +9,7 @@ import Mic from "./nodes/source/Mic";
 
 import Amp from "./nodes/effects/Amp";
 import Biquad from "./nodes/effects/Biquad";
+import Conv from "./nodes/effects/Conv";
 
 import Out from "./nodes/out/Out";
 import Draw from "./nodes/out/Draw";
@@ -20,6 +21,7 @@ export const nodeTypes = {
     // effects
     amp: Amp,
     biquad: Biquad,
+    conv: Conv,
     // outputs
     out: Out,
     draw: Draw
@@ -71,6 +73,15 @@ export async function createAudioNode(id: string, type: keyof typeof nodeTypes, 
             break;
         }
 
+        case 'conv': {
+            const node = context.createConvolver();
+            node.buffer = data.buffer as AudioBuffer | null;
+            node.normalize = data.normalize as boolean;
+
+            nodes.set(id, node);
+            break;
+        }
+
         case "draw": {
             const node = context.createAnalyser();
             node.fftSize = data.fftSize as number;
@@ -84,10 +95,14 @@ export async function createAudioNode(id: string, type: keyof typeof nodeTypes, 
     }
 }
 
-export function updateAudioNode(id: string, data: Record<string, unknown>) {
+export async function updateAudioNode(id: string, data: Record<string, unknown>, decodeAudio?: boolean) {
     const node = nodes.get(id);
 
-    for (const [key, val] of Object.entries(data)) {
+    // eslint-disable-next-line prefer-const
+    for (let [key, val] of Object.entries(data)) {
+        if (decodeAudio) {
+            val = await context.decodeAudioData(await (val as Promise<ArrayBuffer>));
+        }
         // @ts-expect-error just trust me :(
         if (node && (node[key] instanceof AudioParam)) {
             // @ts-expect-error just trust me :(

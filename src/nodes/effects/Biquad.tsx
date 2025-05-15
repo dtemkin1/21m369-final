@@ -26,7 +26,7 @@ const selector = (id: string) => (store: AudioStoreVal) => ({
     })) as ChangeEventHandler<HTMLSelectElement>,
 });
 
-export default function Osc({
+export default function Biquad({
   id,
   data,
   selected,
