@@ -18,7 +18,7 @@ const selector = (id: string) => (store: AudioStoreVal) => ({
     })) as ChangeEventHandler<HTMLInputElement>,
 });
 
-export default function Osc({
+export default function Gain({
   id,
   data,
   selected,

@@ -31,7 +31,7 @@ export interface AudioStoreVal extends AudioStore {
 
 export const useStore = createWithEqualityFn<AudioStoreVal>((set, get) => ({
     nodes: [
-        { id: "output", type: "out", position: { x: 50, y: 250 }, data: {}, undeletable: true },
+        { id: "output", type: "out", position: { x: 50, y: 250 }, data: {}, deletable: false },
     ],
     edges: [
 
@@ -74,16 +74,6 @@ export const useStore = createWithEqualityFn<AudioStoreVal>((set, get) => ({
                 break;
             }
 
-            case "amp": {
-                const data = { gain: 0.5 };
-                const position = { x: 0, y: 0 };
-
-                createAudioNode(id, type, data);
-                set({ nodes: [...get().nodes, { id, type, data, position }] });
-
-                break;
-            }
-
             case "biquad": {
                 const data = { frequency: 440, Q: 1, type: "lowpass" };
                 const position = { x: 0, y: 0 };
@@ -116,6 +106,16 @@ export const useStore = createWithEqualityFn<AudioStoreVal>((set, get) => ({
 
             case "draw": {
                 const data = { fftSize: 2048, smoothingTimeConstant: 0.8, minDecibels: -100, maxDecibels: -30 };
+                const position = { x: 0, y: 0 };
+
+                createAudioNode(id, type, data);
+                set({ nodes: [...get().nodes, { id, type, data, position }] });
+
+                break;
+            }
+
+            case "gain": {
+                const data = { gain: 0.5 };
                 const position = { x: 0, y: 0 };
 
                 createAudioNode(id, type, data);
@@ -166,4 +166,4 @@ export const useStore = createWithEqualityFn<AudioStoreVal>((set, get) => ({
             disconnect(source, target);
         }
     }) as OnEdgesDelete<Edge>,
-}));
+} as AudioStoreVal));

@@ -7,7 +7,7 @@ nodes.set('output', context.destination);
 import Osc from "./nodes/source/Osc";
 import Mic from "./nodes/source/Mic";
 
-import Amp from "./nodes/effects/Amp";
+import Gain from "./nodes/effects/Gain";
 import Biquad from "./nodes/effects/Biquad";
 import Conv from "./nodes/effects/Conv";
 
@@ -20,10 +20,10 @@ export const nodeTypes = {
     osc: Osc,
     mic: Mic,
     // effects
-    amp: Amp,
     biquad: Biquad,
     conv: Conv,
     delay: Delay,
+    gain: Gain,
     // outputs
     out: Out,
     draw: Draw
@@ -57,7 +57,7 @@ export async function createAudioNode(id: string, type: keyof typeof nodeTypes, 
             break;
         }
 
-        case 'amp': {
+        case 'gain': {
             const node = context.createGain();
             node.gain.value = data.gain as number;
 

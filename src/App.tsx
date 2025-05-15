@@ -19,11 +19,11 @@ const selector = (store: AudioStoreVal) => ({
   addEdge: store.addEdge,
   addOsc: () => store.createNode("osc"),
   addMic: () => store.createNode("mic"),
-  addAmp: () => store.createNode("amp"),
   addBiquad: () => store.createNode("biquad"),
   addConv: () => store.createNode("conv"),
   addDelay: () => store.createNode("delay"),
   addDraw: () => store.createNode("draw"),
+  addGain: () => store.createNode("gain"),
   isRunning: store.isRunning,
   toggleAudio: store.toggleAudio,
 });
@@ -53,10 +53,10 @@ function App() {
             </div>
             <div className={cn("flex flex-row gap-4 align-center")}>
               <span>Add effects:</span>
-              <Button onClick={store.addAmp}>Add Amp</Button>
               <Button onClick={store.addBiquad}>Add Biquad</Button>
               <Button onClick={store.addConv}>Add Conv</Button>
               <Button onClick={store.addDelay}>Add Delay</Button>
+              <Button onClick={store.addGain}>Add Gain</Button>
             </div>
             <div className={cn("flex flex-row gap-4 align-center")}>
               <span>Add outputs:</span>
