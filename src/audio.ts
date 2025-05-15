@@ -6,7 +6,10 @@ nodes.set('output', context.destination);
 
 import Osc from "./nodes/source/Osc";
 import Mic from "./nodes/source/Mic";
+
 import Amp from "./nodes/effects/Amp";
+import Biquad from "./nodes/effects/Biquad";
+
 import Out from "./nodes/out/Out";
 import Draw from "./nodes/out/Draw";
 
@@ -16,6 +19,7 @@ export const nodeTypes = {
     mic: Mic,
     // effects
     amp: Amp,
+    biquad: Biquad,
     // outputs
     out: Out,
     draw: Draw
@@ -29,13 +33,21 @@ export function toggleAudio() {
     return isRunning() ? context.suspend() : context.resume();
 }
 
-export function createAudioNode(id: string, type: keyof typeof nodeTypes, data: Record<string, unknown>) {
+export async function createAudioNode(id: string, type: keyof typeof nodeTypes, data: Record<string, unknown>) {
     switch (type) {
         case 'osc': {
             const node = context.createOscillator();
             node.frequency.value = data.frequency as number;
             node.type = data.type as OscillatorType;
             node.start();
+
+            nodes.set(id, node);
+            break;
+        }
+
+        case 'mic': {
+            const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
+            const node = context.createMediaStreamSource(stream);
 
             nodes.set(id, node);
             break;
@@ -49,14 +61,13 @@ export function createAudioNode(id: string, type: keyof typeof nodeTypes, data: 
             break;
         }
 
-        case 'mic': {
-            navigator.mediaDevices.getUserMedia({ audio: true }).then((stream) => {
-                const node = context.createMediaStreamSource(stream);
-                nodes.set(id, node);
-            }).catch((err) => {
-                console.error('Error accessing microphone:', err);
-            });
+        case 'biquad': {
+            const node = context.createBiquadFilter();
+            node.frequency.value = data.frequency as number;
+            node.Q.value = data.Q as number;
+            node.type = data.type as BiquadFilterType;
 
+            nodes.set(id, node);
             break;
         }
 

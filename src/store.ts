@@ -64,6 +64,16 @@ export const useStore = createWithEqualityFn<AudioStoreVal>((set, get) => ({
                 break;
             }
 
+            case "mic": {
+                const data = {};
+                const position = { x: 0, y: 0 };
+
+                createAudioNode(id, type, data);
+                set({ nodes: [...get().nodes, { id, type, data, position }] });
+
+                break;
+            }
+
             case "amp": {
                 const data = { gain: 0.5 };
                 const position = { x: 0, y: 0 };
@@ -74,8 +84,8 @@ export const useStore = createWithEqualityFn<AudioStoreVal>((set, get) => ({
                 break;
             }
 
-            case "mic": {
-                const data = {};
+            case "biquad": {
+                const data = { frequency: 440, Q: 1, type: "lowpass" };
                 const position = { x: 0, y: 0 };
 
                 createAudioNode(id, type, data);

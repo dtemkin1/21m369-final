@@ -18,8 +18,9 @@ const selector = (store: AudioStoreVal) => ({
   onEdgesDelete: store.onEdgesDelete,
   addEdge: store.addEdge,
   addOsc: () => store.createNode("osc"),
-  addAmp: () => store.createNode("amp"),
   addMic: () => store.createNode("mic"),
+  addAmp: () => store.createNode("amp"),
+  addBiquad: () => store.createNode("biquad"),
   addDraw: () => store.createNode("draw"),
   isRunning: store.isRunning,
   toggleAudio: store.toggleAudio,
@@ -50,6 +51,7 @@ function App() {
             </div>
             <div className={cn("flex flex-row gap-4 align-center")}>
               <span>Add effects:</span>
+              <Button onClick={store.addBiquad}>Add Biquad</Button>
               <Button onClick={store.addAmp}>Add Amp</Button>
             </div>
             <div className={cn("flex flex-row gap-4 align-center")}>

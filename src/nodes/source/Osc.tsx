@@ -28,7 +28,7 @@ export default function Osc({
   selected,
 }: {
   id: string;
-  data: { frequency: number; type: string };
+  data: { frequency: number; type: OscillatorType };
   selected: boolean;
 }) {
   const { setFrequency, setType } = useStore(selector(id), shallow);
