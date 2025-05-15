@@ -10,10 +10,11 @@ import Mic from "./nodes/source/Mic";
 import Gain from "./nodes/effects/Gain";
 import Biquad from "./nodes/effects/Biquad";
 import Conv from "./nodes/effects/Conv";
+import Delay from "./nodes/effects/Delay";
+import WaveShaper from "./nodes/effects/WaveShape";
 
 import Out from "./nodes/out/Out";
 import Draw from "./nodes/out/Draw";
-import Delay from "./nodes/effects/Delay";
 
 export const nodeTypes = {
     // sources
@@ -24,6 +25,7 @@ export const nodeTypes = {
     conv: Conv,
     delay: Delay,
     gain: Gain,
+    waveShaper: WaveShaper,
     // outputs
     out: Out,
     draw: Draw
@@ -87,6 +89,15 @@ export async function createAudioNode(id: string, type: keyof typeof nodeTypes, 
         case 'delay': {
             const node = context.createDelay();
             node.delayTime.value = data.delayTime as number;
+
+            nodes.set(id, node);
+            break;
+        }
+
+        case 'waveShaper': {
+            const node = context.createWaveShaper();
+            node.curve = data.curve as Float32Array;
+            node.oversample = data.oversample as OverSampleType;
 
             nodes.set(id, node);
             break;

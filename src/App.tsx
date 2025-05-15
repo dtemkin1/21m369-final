@@ -30,6 +30,7 @@ const selector = (store: AudioStoreVal) => ({
   addDelay: () => store.createNode("delay"),
   addDraw: () => store.createNode("draw"),
   addGain: () => store.createNode("gain"),
+  addWaveShaper: () => store.createNode("waveShaper"),
   isRunning: store.isRunning,
   toggleAudio: store.toggleAudio,
 });
@@ -81,6 +82,9 @@ function App() {
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={store.addGain}>
                   Add Gain
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={store.addWaveShaper}>
+                  Add Wave Shaper
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
