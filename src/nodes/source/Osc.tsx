@@ -16,6 +16,10 @@ const selector = (id: string) => (store: AudioStoreVal) => ({
     store.updateNode(id, {
       frequency: +e.target.value,
     })) as ChangeEventHandler<HTMLInputElement>,
+  setDetune: ((e) =>
+    store.updateNode(id, {
+      detune: +e.target.value,
+    })) as ChangeEventHandler<HTMLInputElement>,
   setType: ((e) =>
     store.updateNode(id, {
       type: e.target.value,
@@ -28,10 +32,10 @@ export default function Osc({
   selected,
 }: {
   id: string;
-  data: { frequency: number; type: OscillatorType };
+  data: { frequency: number; detune: number; type: OscillatorType };
   selected: boolean;
 }) {
-  const { setFrequency, setType } = useStore(selector(id), shallow);
+  const { setFrequency, setDetune, setType } = useStore(selector(id), shallow);
 
   return (
     <BaseNode selected={selected} className="px-3 py-2">
@@ -65,6 +69,22 @@ export default function Osc({
             <option value="sawtooth">sawtooth</option>
             <option value="square">square</option>
           </select>
+        </label>
+
+        <hr className={cn("border-gray-200 mx-2")} />
+
+        <label className={cn("flex flex-col px-2 py-1")}>
+          <p className={cn("text-xs font-bold mb-2")}>Detune</p>
+          <input
+            className={cn("nodrag")}
+            type="range"
+            min={100}
+            max={100}
+            step={0.01}
+            value={data.detune}
+            onChange={setDetune}
+          />
+          <p className={cn("text-right text-xs")}>{data.detune} cents</p>
         </label>
       </div>
 

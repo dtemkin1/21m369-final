@@ -87,8 +87,8 @@ export default function Biquad({
             min={100}
             max={100}
             step={0.01}
-            value={data.frequency}
-            onChange={setFrequency}
+            value={data.detune}
+            onChange={setDetune}
           />
           <p className={cn("text-right text-xs")}>{data.detune} cents</p>
         </label>

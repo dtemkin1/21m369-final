@@ -55,7 +55,7 @@ export const useStore = createWithEqualityFn<AudioStoreVal>((set, get) => ({
 
         switch (type) {
             case "osc": {
-                const data = { frequency: 440, type: "sine" };
+                const data = { frequency: 440, detune: 0, type: "sine" };
                 const position = { x: 0, y: 0 };
 
                 createAudioNode(id, type, data);

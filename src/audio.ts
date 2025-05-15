@@ -44,6 +44,7 @@ export async function createAudioNode(id: string, type: keyof typeof nodeTypes, 
         case 'osc': {
             const node = context.createOscillator();
             node.frequency.value = data.frequency as number;
+            node.detune.value = data.detune as number;
             node.type = data.type as OscillatorType;
             node.start();
 
