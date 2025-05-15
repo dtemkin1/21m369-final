@@ -123,6 +123,9 @@ export async function createAudioNode(id: string, type: keyof typeof nodeTypes, 
             node.minDecibels = data.minDecibels as number;
             node.maxDecibels = data.maxDecibels as number;
 
+            data.getFrequencyBinCount = () => node.frequencyBinCount;
+            data.getByteFrequencyData = (array: Uint8Array) => node.getByteFrequencyData(array);
+
             nodes.set(id, node);
             break;
         }

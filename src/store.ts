@@ -104,16 +104,6 @@ export const useStore = createWithEqualityFn<AudioStoreVal>((set, get) => ({
                 break;
             }
 
-            case "draw": {
-                const data = { fftSize: 2048, smoothingTimeConstant: 0.8, minDecibels: -100, maxDecibels: -30 };
-                const position = { x: 0, y: 0 };
-
-                createAudioNode(id, type, data);
-                set({ nodes: [...get().nodes, { id, type, data, position }] });
-
-                break;
-            }
-
             case "gain": {
                 const data = { gain: 0.5 };
                 const position = { x: 0, y: 0 };
@@ -136,6 +126,16 @@ export const useStore = createWithEqualityFn<AudioStoreVal>((set, get) => ({
 
             case "fileOut": {
                 const data = { stream: new MediaStream() };
+                const position = { x: 0, y: 0 };
+
+                createAudioNode(id, type, data);
+                set({ nodes: [...get().nodes, { id, type, data, position }] });
+
+                break;
+            }
+
+            case "draw": {
+                const data = { fftSize: 2048, smoothingTimeConstant: 0.8, minDecibels: -100, maxDecibels: -30, getFrequencyBinCount: () => 1024, getByteFrequencyData: () => new Uint8Array() };
                 const position = { x: 0, y: 0 };
 
                 createAudioNode(id, type, data);
