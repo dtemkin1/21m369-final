@@ -8,6 +8,12 @@ import { Button } from "./components/ui/button";
 import { Switch } from "./components/ui/switch";
 import { Label } from "./components/ui/label";
 import { Card, CardContent } from "./components/ui/card";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const selector = (store: AudioStoreVal) => ({
   nodes: store.nodes,
@@ -46,22 +52,50 @@ function App() {
       <Panel className={cn("space-x-4")} position="top-right">
         <Card>
           <CardContent className={cn("flex flex-col gap-4")}>
-            <div className={cn("flex flex-row gap-4 align-center")}>
-              <span>Add sources:</span>
-              <Button onClick={store.addOsc}>Add Osc</Button>
-              <Button onClick={store.addMic}>Add Mic</Button>
-            </div>
-            <div className={cn("flex flex-row gap-4 align-center")}>
-              <span>Add effects:</span>
-              <Button onClick={store.addBiquad}>Add Biquad</Button>
-              <Button onClick={store.addConv}>Add Conv</Button>
-              <Button onClick={store.addDelay}>Add Delay</Button>
-              <Button onClick={store.addGain}>Add Gain</Button>
-            </div>
-            <div className={cn("flex flex-row gap-4 align-center")}>
-              <span>Add outputs:</span>
-              <Button onClick={store.addDraw}>Add Draw</Button>
-            </div>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline">Add Source</Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuItem onClick={store.addOsc}>
+                  Add Osc
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={store.addMic}>
+                  Add Mic
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline">Add Effect</Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuItem onClick={store.addBiquad}>
+                  Add Biquad
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={store.addConv}>
+                  Add Conv
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={store.addDelay}>
+                  Add Delay
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={store.addGain}>
+                  Add Gain
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline">Add Output</Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuItem onClick={store.addDraw}>
+                  Add Draw
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+
             <div className="flex items-center space-x-2">
               <Switch
                 checked={store.isRunning}
