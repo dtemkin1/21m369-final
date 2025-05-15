@@ -16,9 +16,17 @@ const selector = (id: string) => (store: AudioStoreVal) => ({
     store.updateNode(id, {
       frequency: +e.target.value,
     })) as ChangeEventHandler<HTMLInputElement>,
+  setDetune: ((e) =>
+    store.updateNode(id, {
+      detune: +e.target.value,
+    })) as ChangeEventHandler<HTMLInputElement>,
   setQ: ((e) =>
     store.updateNode(id, {
       Q: +e.target.value,
+    })) as ChangeEventHandler<HTMLInputElement>,
+  setGain: ((e) =>
+    store.updateNode(id, {
+      gain: +e.target.value,
     })) as ChangeEventHandler<HTMLInputElement>,
   setType: ((e) =>
     store.updateNode(id, {
@@ -32,10 +40,19 @@ export default function Biquad({
   selected,
 }: {
   id: string;
-  data: { frequency: number; Q: number; type: BiquadFilterType };
+  data: {
+    frequency: number;
+    detune: number;
+    Q: number;
+    gain: number;
+    type: BiquadFilterType;
+  };
   selected: boolean;
 }) {
-  const { setFrequency, setQ, setType } = useStore(selector(id), shallow);
+  const { setFrequency, setDetune, setQ, setGain, setType } = useStore(
+    selector(id),
+    shallow
+  );
 
   return (
     <BaseNode selected={selected} className="px-3 py-2">
@@ -62,6 +79,22 @@ export default function Biquad({
 
         <hr className={cn("border-gray-200 mx-2")} />
 
+        <label className={cn("flex flex-col px-2 py-1")}>
+          <p className={cn("text-xs font-bold mb-2")}>Detune</p>
+          <input
+            className={cn("nodrag")}
+            type="range"
+            min={100}
+            max={100}
+            step={0.01}
+            value={data.frequency}
+            onChange={setFrequency}
+          />
+          <p className={cn("text-right text-xs")}>{data.detune} cents</p>
+        </label>
+
+        <hr className={cn("border-gray-200 mx-2")} />
+
         {data.type == "lowpass" || data.type == "highpass" ? (
           <label className={cn("flex flex-col px-2 py-1")}>
             <p className={cn("text-xs font-bold mb-2")}>Q Factor</p>
@@ -71,7 +104,7 @@ export default function Biquad({
               min={-770.63678}
               max={+770.63678}
               value={data.Q}
-              onChange={setQ}
+              onChange={setDetune}
             />
           </label>
         ) : null}
@@ -92,6 +125,21 @@ export default function Biquad({
             />
           </label>
         ) : null}
+
+        <hr className={cn("border-gray-200 mx-2")} />
+
+        <label className={cn("flex flex-col px-2 py-1")}>
+          <p className={cn("text-xs font-bold mb-2")}>Gain</p>
+          <input
+            className={cn("nodrag")}
+            type="range"
+            min={-40}
+            max={40}
+            value={data.gain}
+            onChange={setGain}
+          />
+          <p className={cn("text-right text-xs")}>{data.detune} dB</p>
+        </label>
 
         <hr className={cn("border-gray-200 mx-2")} />
 

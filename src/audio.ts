@@ -70,7 +70,9 @@ export async function createAudioNode(id: string, type: keyof typeof nodeTypes, 
         case 'biquad': {
             const node = context.createBiquadFilter();
             node.frequency.value = data.frequency as number;
+            node.detune.value = data.detune as number;
             node.Q.value = data.Q as number;
+            node.gain.value = data.gain as number;
             node.type = data.type as BiquadFilterType;
 
             nodes.set(id, node);

@@ -75,7 +75,7 @@ export const useStore = createWithEqualityFn<AudioStoreVal>((set, get) => ({
             }
 
             case "biquad": {
-                const data = { frequency: 440, Q: 1, type: "lowpass" };
+                const data = { frequency: 440, detune: 0, Q: 1, gain: 0, type: "lowpass" };
                 const position = { x: 0, y: 0 };
 
                 createAudioNode(id, type, data);
