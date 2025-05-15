@@ -13,6 +13,7 @@ import Conv from "./nodes/effects/Conv";
 
 import Out from "./nodes/out/Out";
 import Draw from "./nodes/out/Draw";
+import Delay from "./nodes/effects/Delay";
 
 export const nodeTypes = {
     // sources
@@ -22,6 +23,7 @@ export const nodeTypes = {
     amp: Amp,
     biquad: Biquad,
     conv: Conv,
+    delay: Delay,
     // outputs
     out: Out,
     draw: Draw
@@ -82,6 +84,14 @@ export async function createAudioNode(id: string, type: keyof typeof nodeTypes, 
             break;
         }
 
+        case 'delay': {
+            const node = context.createDelay();
+            node.delayTime.value = data.delayTime as number;
+
+            nodes.set(id, node);
+            break;
+        }
+
         case "draw": {
             const node = context.createAnalyser();
             node.fftSize = data.fftSize as number;
@@ -97,8 +107,7 @@ export async function createAudioNode(id: string, type: keyof typeof nodeTypes, 
 
 export function updateAudioNode(id: string, data: Record<string, unknown>) {
     const node = nodes.get(id);
-    // eslint-disable-next-line prefer-const
-    for (let [key, val] of Object.entries(data)) {
+    for (const [key, val] of Object.entries(data)) {
         // @ts-expect-error just trust me :(
         if (node && (node[key] instanceof AudioParam)) {
             // @ts-expect-error just trust me :(
