@@ -61,18 +61,6 @@ export default function Osc({
 
         <hr className={cn("border-gray-200 mx-2")} />
 
-        <label className={cn("flex flex-col px-2 pt-1 pb-4")}>
-          <p className={cn("text-xs font-bold mb-2")}>Waveform</p>
-          <select className={cn("nodrag")} value={data.type} onChange={setType}>
-            <option value="sine">sine</option>
-            <option value="triangle">triangle</option>
-            <option value="sawtooth">sawtooth</option>
-            <option value="square">square</option>
-          </select>
-        </label>
-
-        <hr className={cn("border-gray-200 mx-2")} />
-
         <label className={cn("flex flex-col px-2 py-1")}>
           <p className={cn("text-xs font-bold mb-2")}>Detune</p>
           <input
@@ -85,6 +73,18 @@ export default function Osc({
             onChange={setDetune}
           />
           <p className={cn("text-right text-xs")}>{data.detune} cents</p>
+        </label>
+
+        <hr className={cn("border-gray-200 mx-2")} />
+
+        <label className={cn("flex flex-col px-2 pt-1 pb-4")}>
+          <p className={cn("text-xs font-bold mb-2")}>Waveform</p>
+          <select className={cn("nodrag")} value={data.type} onChange={setType}>
+            <option value="sine">sine</option>
+            <option value="triangle">triangle</option>
+            <option value="sawtooth">sawtooth</option>
+            <option value="square">square</option>
+          </select>
         </label>
       </div>
 

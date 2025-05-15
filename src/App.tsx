@@ -28,9 +28,10 @@ const selector = (store: AudioStoreVal) => ({
   addBiquad: () => store.createNode("biquad"),
   addConv: () => store.createNode("conv"),
   addDelay: () => store.createNode("delay"),
-  addDraw: () => store.createNode("draw"),
   addGain: () => store.createNode("gain"),
   addWaveShaper: () => store.createNode("waveShaper"),
+  addDraw: () => store.createNode("draw"),
+  addFileOut: () => store.createNode("fileOut"),
   isRunning: store.isRunning,
   toggleAudio: store.toggleAudio,
 });
@@ -96,6 +97,9 @@ function App() {
               <DropdownMenuContent>
                 <DropdownMenuItem onClick={store.addDraw}>
                   Add Draw
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={store.addFileOut}>
+                  Add Recorder
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>

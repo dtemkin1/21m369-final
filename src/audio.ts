@@ -14,6 +14,7 @@ import Delay from "./nodes/effects/Delay";
 import WaveShaper from "./nodes/effects/WaveShape";
 
 import Out from "./nodes/out/Out";
+import FileOut from "./nodes/out/FileOut";
 import Draw from "./nodes/out/Draw";
 
 export const nodeTypes = {
@@ -28,6 +29,7 @@ export const nodeTypes = {
     waveShaper: WaveShaper,
     // outputs
     out: Out,
+    fileOut: FileOut,
     draw: Draw
 } as const;
 
@@ -101,6 +103,14 @@ export async function createAudioNode(id: string, type: keyof typeof nodeTypes, 
             const node = context.createWaveShaper();
             node.curve = data.curve as Float32Array;
             node.oversample = data.oversample as OverSampleType;
+
+            nodes.set(id, node);
+            break;
+        }
+
+        case "fileOut": {
+            const node = context.createMediaStreamDestination();
+            data.stream = node.stream;
 
             nodes.set(id, node);
             break;

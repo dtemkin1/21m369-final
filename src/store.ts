@@ -134,6 +134,16 @@ export const useStore = createWithEqualityFn<AudioStoreVal>((set, get) => ({
                 break;
             }
 
+            case "fileOut": {
+                const data = { stream: new MediaStream() };
+                const position = { x: 0, y: 0 };
+
+                createAudioNode(id, type, data);
+                set({ nodes: [...get().nodes, { id, type, data, position }] });
+
+                break;
+            }
+
             default: {
                 break;
             }
