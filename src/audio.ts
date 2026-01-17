@@ -111,7 +111,7 @@ export async function createAudioNode(id: string, type: keyof typeof nodeTypes, 
 
         case 'waveShaper': {
             const node = context.createWaveShaper();
-            node.curve = data.curve as Float32Array;
+            node.curve = data.curve as Float32Array<ArrayBuffer>;
             node.oversample = data.oversample as OverSampleType;
 
             nodes.set(id, node);
@@ -134,7 +134,7 @@ export async function createAudioNode(id: string, type: keyof typeof nodeTypes, 
             node.maxDecibels = data.maxDecibels as number;
 
             data.getFrequencyBinCount = () => node.frequencyBinCount;
-            data.getByteFrequencyData = (array: Uint8Array) => node.getByteFrequencyData(array);
+            data.getByteFrequencyData = (array: Uint8Array<ArrayBuffer>) => node.getByteFrequencyData(array);
 
             nodes.set(id, node);
             break;
